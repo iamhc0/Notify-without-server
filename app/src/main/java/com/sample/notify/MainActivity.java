@@ -1,7 +1,7 @@
 package com.sample.notify;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
     EditText edtTitle;
     EditText edtMessage;
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
-    final private String serverKey = "key=" + "Your Firebase server key";
+    final private String serverKey = "key=" + "AAAAnPHwtRs:APA91bG-bNErodH86h6VLFO7pp-bJHSNAeHORGLqMJw2_5nxdX7MtcUU3aa9jXgFKvclhN62l6i3Oh7AdVBs5deEtQMRif6jjz3_WBSIPZJsmhhOy8LKcHuxBS-1hJqNPDr8_mRQibZh";
     final private String contentType = "application/json";
-    final String TAG = "NOTIFICATION TAG";
+    final String TAG = "FirebaseCloud";
     
     String NOTIFICATION_TITLE;
     String NOTIFICATION_MESSAGE;
