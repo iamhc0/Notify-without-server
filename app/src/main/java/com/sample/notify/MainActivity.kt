@@ -1,18 +1,12 @@
 package com.sample.notify
 
-import androidx.appcompat.app.AppCompatActivity
-import android.widget.EditText
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import org.json.JSONObject
-import org.json.JSONException
-import com.android.volley.toolbox.JsonObjectRequest
-import android.widget.Toast
-import kotlin.Throws
-import com.android.volley.AuthFailureError
-import com.android.volley.Response
-import java.util.HashMap
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     var edtMessage: EditText? = null
 
 
+    @SuppressLint("LongLogTag")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,7 +26,24 @@ class MainActivity : AppCompatActivity() {
         btnSend.setOnClickListener {
 
 
-            sendNotification(edtTitle,edtMessage)
+            sendNotification(edtTitle, edtMessage)
+        }
+
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+
+            if (!task.isSuccessful) {
+                Log.w(
+                    "getNotificationToken",
+                    "Fetching FCM registration token failed",
+                    task.exception
+                )
+
+                return@addOnCompleteListener
+            }
+            // Get new FCM registration token
+            val token: String = task.result
+            Log.i(TAG, "onTokenRefresh completed with token: $token")
         }
     }
 

@@ -1,5 +1,6 @@
 package com.sample.notify
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -30,11 +31,12 @@ const val serverKey =
 const val contentType = "application/json"
 const val ADMIN_CHANNEL_ID = "admin_channel"
 const val SUBSCRIBE_TO = "userABC"
+const val TAG = "MyFirebaseMessagingService" + "_"
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val TAG = MyFirebaseMessagingService::class.simpleName + "_"
 
+    @SuppressLint("LongLogTag")
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
@@ -45,11 +47,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
           you can send this token to your server.
         */
         // Once the token is generated, subscribe to topic with the userId
+        // But Test Notification FCM from firebase is not received using this
+        // and campaign message is also received
         FirebaseMessaging.getInstance().subscribeToTopic(SUBSCRIBE_TO)
+
+
         Log.i(TAG, "onTokenRefresh completed with token: $token")
     }
 
+    @SuppressLint("LongLogTag")
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+
+        Log.d(TAG, "onMessageReceived: $remoteMessage")
         val intent = Intent(this, MainActivity::class.java)
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random().nextInt(3000)
@@ -70,11 +79,23 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             resources, R.drawable.notify_icon
         )
         val notificationSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notificationBuilder =
+
+
+
+
+        val notificationBuilder = if (remoteMessage.notification != null) {    // TODO This is used for notification using Firebase console
+            NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
+                .setSmallIcon(R.drawable.notify_icon)
+                .setLargeIcon(largeIcon).setContentTitle(remoteMessage.notification?.title)
+                .setContentText(remoteMessage.notification?.body).setAutoCancel(true)
+                .setSound(notificationSoundUri).setContentIntent(pendingIntent)
+        } else // TODO This is used for notification using app side using api
             NotificationCompat.Builder(this, ADMIN_CHANNEL_ID).setSmallIcon(R.drawable.notify_icon)
                 .setLargeIcon(largeIcon).setContentTitle(remoteMessage.data["title"])
                 .setContentText(remoteMessage.data["message"]).setAutoCancel(true)
                 .setSound(notificationSoundUri).setContentIntent(pendingIntent)
+
+
 
         //Set notification color to match your app color template
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
