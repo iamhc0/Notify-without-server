@@ -49,7 +49,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Once the token is generated, subscribe to topic with the userId
         // But Test Notification FCM from firebase is not received using this
         // and campaign message is also received
-        FirebaseMessaging.getInstance().subscribeToTopic(SUBSCRIBE_TO)
+       // FirebaseMessaging.getInstance().subscribeToTopic(SUBSCRIBE_TO)
 
 
         Log.i(TAG, "onTokenRefresh completed with token: $token")
@@ -85,7 +85,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationBuilder = if (remoteMessage.notification != null) {    // TODO This is used for notification using Firebase console
             NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
-                .setSmallIcon(R.drawable.notify_icon)
+                .setSmallIcon(R.drawable.ic_baseline_notifications_none_24)
                 .setLargeIcon(largeIcon).setContentTitle(remoteMessage.notification?.title)
                 .setContentText(remoteMessage.notification?.body).setAutoCancel(true)
                 .setSound(notificationSoundUri).setContentIntent(pendingIntent)
