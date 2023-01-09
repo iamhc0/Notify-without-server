@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.sample.notify.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity() {
+class FcmWithoutServerActivity : AppCompatActivity() {
     var binding: ActivityMainBinding? = null
 
     companion object {

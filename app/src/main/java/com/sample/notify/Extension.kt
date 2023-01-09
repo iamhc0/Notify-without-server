@@ -37,7 +37,7 @@ var token = ""
 fun Context.sendNotification(edtTitle: EditText?, edtMessage: EditText?, isTopic: Boolean) {
 
     val topic = "/topics/userABC" //topic has to match what the receiver subscribed to
-    if (MainActivity.isTopic) FirebaseMessaging.getInstance().subscribeToTopic(SUBSCRIBE_TO)
+    if (FcmWithoutServerActivity.isTopic) FirebaseMessaging.getInstance().subscribeToTopic(SUBSCRIBE_TO)
 
     val title = edtTitle?.text.toString()
     val message = edtMessage?.text.toString()
@@ -70,7 +70,7 @@ fun Context.sendNotification(edtTitle: EditText?, edtMessage: EditText?, isTopic
                 return params
             }
         }
-    MySingleton.getInstance(applicationContext)?.addToRequestQueue(jsonObjectRequest)
+    VolleyRequest.getInstance(applicationContext)?.addToRequestQueue(jsonObjectRequest)
 }
 
 

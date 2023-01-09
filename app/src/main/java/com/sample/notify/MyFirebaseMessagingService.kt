@@ -35,7 +35,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // But Test Notification FCM from firebase is not received using this
         // and campaign message is also received
 
-        if (MainActivity.isTopic) FirebaseMessaging.getInstance().subscribeToTopic(SUBSCRIBE_TO)
+        if (FcmWithoutServerActivity.isTopic) FirebaseMessaging.getInstance().subscribeToTopic(SUBSCRIBE_TO)
 
 
         Log.i(TAG, "onTokenRefresh completed with token: $token")
@@ -45,7 +45,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
         Log.d(TAG, "onMessageReceived: $remoteMessage")
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, FcmWithoutServerActivity::class.java)
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random().nextInt(3000)
 

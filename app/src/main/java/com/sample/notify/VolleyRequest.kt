@@ -5,10 +5,9 @@ import android.content.Context
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
-import com.sample.notify.MySingleton
 import kotlin.jvm.Synchronized
 
-class MySingleton private constructor(private val ctx: Context) {
+class VolleyRequest private constructor(private val ctx: Context) {
     private var requestQueue: RequestQueue?
 
     init {
@@ -30,11 +29,11 @@ class MySingleton private constructor(private val ctx: Context) {
 
     companion object {
         @SuppressLint("StaticFieldLeak")
-        private var instance: MySingleton? = null
+        private var instance: VolleyRequest? = null
         @Synchronized
-        fun getInstance(context: Context): MySingleton? {
+        fun getInstance(context: Context): VolleyRequest? {
             if (instance == null) {
-                instance = MySingleton(context)
+                instance = VolleyRequest(context)
             }
             return instance
         }
